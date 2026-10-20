@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Grady Allen</title>
-  <meta name="description" content="Grady Allen — senior at James Madison University, Class of 2027.">
+  <meta name="description" content="Grady Allen — senior at James Madison University, Class of 2027. Strategy, venture capital and growth.">
   <meta name="theme-color" content="#ebebeb">
 
   <!-- Start fetching the layers immediately; main.js also waits for them to decode before revealing the hero. -->
@@ -13,6 +13,8 @@
   <link rel="preload" as="image" href="assets/hero/hill.png">
   <link rel="preload" as="image" href="assets/hero/foreground.png">
 
+  <!-- Marks JS as available so scroll-reveal start states only apply when something will un-hide them. -->
+  <script>document.documentElement.classList.add('js');</script>
   <link rel="stylesheet" href="styles.css">
   <!-- Without JS there is nothing to wait for: show the hero straight away. -->
   <noscript><style>.is-loading .hero__scene, .is-loading .hero__card { opacity: 1 !important; }</style></noscript>
@@ -20,8 +22,21 @@
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script defer src="main.js"></script>
+  <script defer src="site.js"></script>
 </head>
 <body>
+
+  <!-- Slim nav: appears once the hero sequence has finished (site.js) -->
+  <nav class="nav" aria-label="Primary">
+    <a class="nav__name" href="#hero">Grady Allen</a>
+    <ul class="nav__links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
   <main>
 
     <!-- HERO: pinned while the layers push toward the camera (see main.js CONFIG) -->
@@ -47,62 +62,349 @@
       </div>
     </section>
 
-    <!-- CONTENT: sits on the sampled foreground colour (--paper). Placeholder copy for now. -->
+    <!-- ABOUT -->
     <section class="section" id="about">
       <div class="wrap">
         <h2 class="section__label"><span>01</span> About</h2>
         <div class="section__body">
-          <p class="lede">A short, confident sentence about who you are and what you are looking for goes here.</p>
-          <p>Placeholder paragraph. Replace this with two or three sentences about your background, what you study, and the kind of problems you like working on. Keep it plain and specific; recruiters skim.</p>
-          <p>A second paragraph can cover interests outside of work, or what you are focused on after graduation.</p>
+          <!-- .lede words light up as you scroll (site.js) -->
+          <p class="lede" data-scrub>I keep returning to the same questions: where can a business win, why does that opportunity exist, and how do you turn insight into action?</p>
+
+          <p class="reveal">Over the past few years I've built experience across consulting, venture capital, growth strategy and analytics, each offering a different lens on how businesses grow, compete and create value.</p>
+          <p class="reveal">I've helped set investment strategy and source deals for a student-managed venture fund, led client engagements at a student-run consulting firm, and delivered research and analytics at KPMG.</p>
+          <p class="reveal">I'm graduating in 2027 and interested in strategy-focused roles across consulting, venture capital and corporate strategy.</p>
+
+          <ul class="stats reveal" aria-label="Selected numbers">
+            <li class="stat">
+              <span class="stat__num"><span data-count="650" data-prefix="$" data-suffix="K">$650K</span></span>
+              <span class="stat__label">student-managed VC fund I help lead, 20+ portfolio companies</span>
+            </li>
+            <li class="stat">
+              <span class="stat__num"><span data-count="600" data-suffix="+">600+</span></span>
+              <span class="stat__label">reports synthesized in 3 weeks at KPMG</span>
+            </li>
+            <li class="stat">
+              <span class="stat__num"><span data-count="80" data-suffix="%">80%</span></span>
+              <span class="stat__label">dashboard runtime improvement through Python automation</span>
+            </li>
+            <li class="stat">
+              <span class="stat__num"><span data-count="15" data-prefix="Top ">Top 15</span></span>
+              <span class="stat__label">international chapter ranking among 340+ AMA chapters</span>
+            </li>
+          </ul>
+
+          <dl class="facts reveal">
+            <div><dt>Studying</dt><dd>JMU College of Business, Class of 2027</dd></div>
+            <div><dt>Based</dt><dd>Harrisonburg, Virginia</dd></div>
+            <div><dt>Looking for</dt><dd>Consulting, venture capital, corporate strategy</dd></div>
+          </dl>
         </div>
       </div>
     </section>
 
+    <!-- EXPERIENCE: grouped by organization, newest first. Edit freely; markup repeats. -->
     <section class="section" id="experience">
       <div class="wrap">
         <h2 class="section__label"><span>02</span> Experience</h2>
-        <div class="section__body">
-          <ol class="entries">
-            <li class="entry">
-              <p class="entry__when">2026</p>
-              <div>
-                <h3 class="entry__role">Role title</h3>
-                <p class="entry__org">Organization</p>
-                <p class="entry__desc">One or two lines on what you did and the result. Lead with the outcome.</p>
+        <div class="section__body section__body--wide">
+          <div class="timeline" data-timeline>
+            <span class="timeline__bar" aria-hidden="true"></span>
+
+            <article class="job reveal">
+              <header class="job__org">
+                <h3>Polymarket</h3>
+                <p>Remote · New York</p>
+              </header>
+              <div class="job__roles">
+                <div class="role">
+                  <div class="role__top"><h4>Growth Intern</h4><span class="role__dates">Sep 2026 – Present</span></div>
+                  <p>Drive campus-level growth for Polymarket and support go-to-market initiatives for new product launches.</p>
+                </div>
               </div>
-            </li>
-            <li class="entry">
-              <p class="entry__when">2025</p>
-              <div>
-                <h3 class="entry__role">Role title</h3>
-                <p class="entry__org">Organization</p>
-                <p class="entry__desc">One or two lines on what you did and the result. Lead with the outcome.</p>
+            </article>
+
+            <article class="job reveal">
+              <header class="job__org">
+                <h3>JMU Gilliam Center for Entrepreneurship</h3>
+                <p>Bluestone Seed Fund · Harrisonburg, Virginia</p>
+              </header>
+              <div class="job__roles">
+                <div class="role">
+                  <div class="role__top"><h4>Principal</h4><span class="role__dates">Aug 2026 – Present</span></div>
+                  <p>Lead the associate team, set investment strategy, and oversee sourcing, diligence and portfolio monitoring for a $650K student-managed VC fund with 20+ portfolio companies.</p>
+                </div>
+                <div class="role">
+                  <div class="role__top"><h4>Venture Capital Associate</h4><span class="role__dates">Sep 2025 – Aug 2026</span></div>
+                  <p>Sourced and screened early-stage startups, evaluated founder pitches, and tracked portfolio performance for the fund.</p>
+                </div>
               </div>
-            </li>
-            <li class="entry">
-              <p class="entry__when">2024</p>
-              <div>
-                <h3 class="entry__role">Role title</h3>
-                <p class="entry__org">Organization</p>
-                <p class="entry__desc">One or two lines on what you did and the result. Lead with the outcome.</p>
+            </article>
+
+            <article class="job reveal">
+              <header class="job__org">
+                <h3>Madison Consulting Club</h3>
+                <p>Student-run consulting firm · Harrisonburg, Virginia</p>
+              </header>
+              <div class="job__roles">
+                <div class="role">
+                  <div class="role__top"><h4>Projects Vice President</h4><span class="role__dates">Apr 2026 – Present</span></div>
+                  <p>Lead business development and own the client engagement portfolio, managing portfolio directors, project managers and consultants.</p>
+                </div>
+                <div class="role">
+                  <div class="role__top"><h4>Project Manager</h4><span class="role__dates">Dec 2025 – Apr 2026</span></div>
+                  <p>Led a client engagement end to end: scoped the problem, delegated workstreams across four consultants, and presented final recommendations to the client.</p>
+                </div>
+                <div class="role">
+                  <div class="role__top"><h4>Consultant</h4><span class="role__dates">Feb 2025 – Dec 2025</span></div>
+                  <p>Delivered pro bono client engagements, conducting market research, analyzing data and building recommendations, after completing a selective analyst program.</p>
+                </div>
               </div>
-            </li>
-          </ol>
+            </article>
+
+            <article class="job reveal">
+              <header class="job__org">
+                <h3>JMU College of Business</h3>
+                <p>Harrisonburg, Virginia</p>
+              </header>
+              <div class="job__roles">
+                <div class="role">
+                  <div class="role__top"><h4>Student Advisory Council</h4><span class="role__dates">Mar 2026 – Present</span></div>
+                  <p>Represent the student body to the College of Business Board of Advisors on programming, curriculum and student experience.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="job reveal">
+              <header class="job__org">
+                <h3>KPMG</h3>
+                <p>Consulting · McLean, Virginia</p>
+              </header>
+              <div class="job__roles">
+                <div class="role">
+                  <div class="role__top"><h4>Advisory Intern, Customer &amp; Operations</h4><span class="role__dates">Jun – Aug 2026</span></div>
+                  <p>Supported program delivery through research and analysis, dashboard design, project management and Python automation. Synthesized 600+ reports in 3 weeks and improved dashboard runtime efficiency by 80%.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="job reveal">
+              <header class="job__org">
+                <h3>American Marketing Association, JMU</h3>
+                <p>Harrisonburg, Virginia</p>
+              </header>
+              <div class="job__roles">
+                <div class="role">
+                  <div class="role__top"><h4>Vice President</h4><span class="role__dates">Apr 2025 – May 2026</span></div>
+                  <p>Set organizational strategy and oversaw a 12-member executive board and 100+ general members. Achieved a top-15 international chapter ranking out of 340+ chapters.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="job reveal">
+              <header class="job__org">
+                <h3>World</h3>
+                <p>Remote · San Francisco</p>
+              </header>
+              <div class="job__roles">
+                <div class="role">
+                  <div class="role__top"><h4>Growth Intern</h4><span class="role__dates">Jan – Apr 2026</span></div>
+                  <p>Owned campus-level growth strategy, translating company-wide KPI targets into localized acquisition tactics. Prioritized high-impact events to accelerate verified-user growth and optimized budget allocation to improve acquisition efficiency while protecting brand quality.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="job reveal">
+              <header class="job__org">
+                <h3>Reston Tech Wiz</h3>
+                <p>Reston, Virginia</p>
+              </header>
+              <div class="job__roles">
+                <div class="role">
+                  <div class="role__top"><h4>Go-To-Market Strategy Intern</h4><span class="role__dates">May – Sep 2025</span></div>
+                  <p>Owned go-to-market and customer-acquisition strategy for an all-in-one marketing, website, client communication and project-management SaaS aimed at the fragmented HVAC and home-services market.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="job reveal">
+              <header class="job__org">
+                <h3>charity: water</h3>
+                <p>Global Career Accelerator externship</p>
+              </header>
+              <div class="job__roles">
+                <div class="role">
+                  <div class="role__top"><h4>Digital Marketing Intern</h4><span class="role__dates">May – Aug 2024</span></div>
+                  <p>Ran digital marketing campaigns, A/B tested creative and built landing pages.</p>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- PROJECTS: click a row to expand. To add one, copy a <li class="project"> and give the button/panel a new matching id.
+         Add deliverables later as: <a class="project__link" href="...">Deliverable ↗</a> inside .project__inner. -->
+    <section class="section" id="projects">
+      <div class="wrap">
+        <h2 class="section__label"><span>03</span> Projects</h2>
+        <div class="section__body section__body--wide">
+
+          <div class="filters reveal" role="group" aria-label="Filter projects">
+            <button class="chip is-active" data-filter="all" aria-pressed="true">All</button>
+            <button class="chip" data-filter="consulting" aria-pressed="false">Consulting</button>
+            <button class="chip" data-filter="strategy" aria-pressed="false">Strategy</button>
+            <button class="chip" data-filter="analytics" aria-pressed="false">Analytics</button>
+            <button class="chip" data-filter="product" aria-pressed="false">Product</button>
+          </div>
+
+          <ul class="projects">
+
+            <li class="project reveal" data-cat="product">
+              <button class="project__head" aria-expanded="false" aria-controls="p-radar">
+                <span class="project__title">Startup Radar</span>
+                <span class="project__tag">Product</span>
+                <span class="project__date">2026 – Now</span>
+                <span class="project__icon" aria-hidden="true"></span>
+              </button>
+              <div class="project__panel" id="p-radar"><div class="project__inner">
+                <p>An automated startup intelligence platform, currently in development. It discovers emerging companies and tracks early momentum signals across funding, hiring, product launches, accelerators, open-source activity and other public data, built on a deterministic-first AI architecture.</p>
+                <ul class="chips"><li>TypeScript</li><li>Next.js</li><li>Supabase</li></ul>
+              </div></div>
+            </li>
+
+            <li class="project reveal" data-cat="consulting">
+              <button class="project__head" aria-expanded="false" aria-controls="p-cheapies">
+                <span class="project__title">Cheapie's LLC Strategic Proposal</span>
+                <span class="project__tag">Consulting</span>
+                <span class="project__date">2026</span>
+                <span class="project__icon" aria-hidden="true"></span>
+              </button>
+              <div class="project__panel" id="p-cheapies"><div class="project__inner">
+                <p>Led a consulting engagement for Cheapie's LLC, a fictional retail company used as a course case, to diagnose and resolve a team dynamics crisis. Using an evidence-based decision-making framework, I triangulated four independent evidence streams (organizational survey data, external stakeholder benchmarks, practitioner interviews and peer-reviewed literature) and traced the problem to a structural root cause: systematic internal promotion without formal management development.</p>
+                <p>The three-component solution drew on two large meta-analyses and projected gains in colleague satisfaction, lower quit intent among the highest-risk employee quartile, and higher revenue per employee across all 40 stores.</p>
+              </div></div>
+            </li>
+
+            <li class="project reveal" data-cat="analytics">
+              <button class="project__head" aria-expanded="false" aria-controls="p-ma">
+                <span class="project__title">Descriptive Analysis of M&amp;A Transactions</span>
+                <span class="project__tag">Analytics</span>
+                <span class="project__date">2026</span>
+                <span class="project__icon" aria-hidden="true"></span>
+              </button>
+              <div class="project__panel" id="p-ma"><div class="project__inner">
+                <p>Led a three-person team studying how deal characteristics affect post-acquisition shareholder returns. We built a dataset of 46 transactions with Python and the Yahoo Finance API, calculated each acquirer's 365-day return after announcement, and ran multiple regression on transformational status (over 25% of acquirer market cap), industry alignment and deal size.</p>
+                <p>Transformational acquisitions drove roughly 43% lower returns and posed the greatest risk to shareholder value.</p>
+                <ul class="chips"><li>Python</li><li>Yahoo Finance API</li><li>Regression</li><li>46 deals</li></ul>
+              </div></div>
+            </li>
+
+            <li class="project reveal" data-cat="consulting">
+              <button class="project__head" aria-expanded="false" aria-controls="p-reslife">
+                <span class="project__title">JMU Residence Life</span>
+                <span class="project__tag">Consulting</span>
+                <span class="project__date">2026</span>
+                <span class="project__icon" aria-hidden="true"></span>
+              </button>
+              <div class="project__panel" id="p-reslife"><div class="project__inner">
+                <p>Project Manager on a pro bono engagement for the JMU Office of Residence Life, leading a five-person team through a full consulting cycle across four initiatives: Digital JACard, Dorms &amp; Spaces, Involvement and Data Cleanup.</p>
+                <p>Recommendations were grounded in two waves of student survey data (about 4,580 Fall and 2,380 Spring respondents) and benchmarking against Temple, Penn State and the University of Pittsburgh to validate a mobile credential adoption strategy. The phased roadmap paired near-term, no-capital-outlay wins with a 12–18 month Digital JACard pilot, delivered as a client-ready deck and strategic whitepaper.</p>
+                <ul class="chips"><li>Project Manager</li><li>5-person team</li><li>~6,960 survey responses</li></ul>
+              </div></div>
+            </li>
+
+            <li class="project reveal" data-cat="consulting">
+              <button class="project__head" aria-expanded="false" aria-controls="p-honors">
+                <span class="project__title">JMU Honors College</span>
+                <span class="project__tag">Consulting</span>
+                <span class="project__date">2025</span>
+                <span class="project__icon" aria-hidden="true"></span>
+              </button>
+              <div class="project__panel" id="p-honors"><div class="project__inner">
+                <p>Consultant on a pro bono engagement to address enrollment disparities, specifically the underrepresentation of male College of Business students. The roadmap raised conversion through "Campus Engagement" and "Student Visibility": collaborative pop-up events and an overhaul of digital and print communications that align Honors College benefits with the career-focused motivations of business students.</p>
+              </div></div>
+            </li>
+
+            <li class="project reveal" data-cat="strategy">
+              <button class="project__head" aria-expanded="false" aria-controls="p-aquastack">
+                <span class="project__title">AquaStack: Integrated Business Plan</span>
+                <span class="project__tag">Strategy</span>
+                <span class="project__date">2025</span>
+                <span class="project__icon" aria-hidden="true"></span>
+              </button>
+              <div class="project__panel" id="p-aquastack"><div class="project__inner">
+                <p>With an eight-person team, built AquaStack, a modular water filtration venture, for the COB 300 Integrated Business Plan. I led analytical work across marketing, operations, management and finance to evaluate customer needs, size global markets and define a viable business model.</p>
+                <p>The plan includes competitive analysis, supply chain feasibility across U.S. and Asia-Pacific suppliers, a five-year financial forecast, and a UNICEF-aligned donation strategy, tied together with risk and growth analysis.</p>
+              </div></div>
+            </li>
+
+            <li class="project reveal" data-cat="strategy">
+              <button class="project__head" aria-expanded="false" aria-controls="p-ey">
+                <span class="project__title">EY Case Competition: BrewMasters</span>
+                <span class="project__tag">Strategy</span>
+                <span class="project__date">2025</span>
+                <span class="project__icon" aria-hidden="true"></span>
+              </button>
+              <div class="project__panel" id="p-ey"><div class="project__inner">
+                <p>With a team of analysts, developed a growth strategy for BrewMasters Inc. as the capstone before promotion to Consultant. The proposal addressed declining brand loyalty and operational bottlenecks through a "tech-driven" transformation: self-service kiosks and a personalized mobile app.</p>
+                <ul class="chips"><li>Projected: 50% shorter wait times</li><li>Projected: 15% lift in member sales</li></ul>
+              </div></div>
+            </li>
+
+            <li class="project reveal" data-cat="consulting">
+              <button class="project__head" aria-expanded="false" aria-controls="p-hdpt">
+                <span class="project__title">Harrisonburg Public Transportation</span>
+                <span class="project__tag">Consulting</span>
+                <span class="project__date">2025</span>
+                <span class="project__icon" aria-hidden="true"></span>
+              </button>
+              <div class="project__panel" id="p-hdpt"><div class="project__inner">
+                <p>Developed a strategic roadmap for the Harrisonburg Department of Public Transportation through the Madison Consulting Club Analyst Program. The "Scalable Bus Management" model shifts to smaller vehicles in off-peak hours and adds AI-driven dynamic scheduling, aimed at cutting fuel and maintenance costs.</p>
+                <ul class="chips"><li>Projected: +15% service reliability</li><li>Projected: +48% rider satisfaction</li></ul>
+              </div></div>
+            </li>
+
+            <li class="project reveal" data-cat="consulting">
+              <button class="project__head" aria-expanded="false" aria-controls="p-massy">
+                <span class="project__title">Massanutten Resort</span>
+                <span class="project__tag">Consulting</span>
+                <span class="project__date">2025</span>
+                <span class="project__icon" aria-hidden="true"></span>
+              </button>
+              <div class="project__panel" id="p-massy"><div class="project__inner">
+                <p>Solo strategic engagement through the Madison Consulting Club Analyst Program to capture a $175M educational tourism market. The proposal turned underused resort assets into "STEM Adventure Programs" for K-12 field trips and family workshops, using a cost-synergy model built on cross-trained staff and repurposed facilities.</p>
+                <ul class="chips"><li>Base case: $234K annual revenue</li><li>539% projected ROI</li></ul>
+              </div></div>
+            </li>
+
+            <li class="project reveal" data-cat="strategy">
+              <button class="project__head" aria-expanded="false" aria-controls="p-eyvol">
+                <span class="project__title">Corporate Volunteering Initiative for EY</span>
+                <span class="project__tag">Strategy</span>
+                <span class="project__date">2024</span>
+                <span class="project__icon" aria-hidden="true"></span>
+              </button>
+              <div class="project__panel" id="p-eyvol"><div class="project__inner">
+                <p>A COB 202 course project proposing a corporate volunteering initiative for EY to address homelessness in New York City, which affects about 350,000 people, including roughly 100,000 school-aged children. The two-phase strategy pairs hands-on shelter volunteering with pro bono consulting to improve shelter operations, aligned to EY's values through CSR and ESG analysis.</p>
+              </div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
     <section class="section" id="contact">
       <div class="wrap">
-        <h2 class="section__label"><span>03</span> Contact</h2>
+        <h2 class="section__label"><span>04</span> Contact</h2>
         <div class="section__body">
-          <p class="lede">Open to conversations about roles starting after graduation.</p>
-          <p><a class="big-link" href="mailto:you@example.com">you@example.com</a></p>
-          <ul class="links">
-            <li><a href="#">LinkedIn</a></li>
-            <li><a href="#">GitHub</a></li>
-            <li><a href="#">Résumé (PDF)</a></li>
+          <p class="lede" data-scrub>Open to conversations about strategy roles starting after graduation.</p>
+          <p class="reveal"><a class="big-link" href="https://www.linkedin.com/in/grady-allen/" target="_blank" rel="noopener">Say hello on LinkedIn</a></p>
+          <!-- Add an email later: <p class="reveal"><a class="big-link" href="mailto:you@example.com">you@example.com</a></p> -->
+          <ul class="links reveal">
+            <li><a href="https://github.com/gradycwallen" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://docs.google.com/document/d/1Y6gKhIpEmBfSmpHWpggoAQLkzEjrqHxeDSOSK3eaH5g/edit?usp=sharing" target="_blank" rel="noopener">Résumé</a></li>
           </ul>
         </div>
       </div>
@@ -110,8 +412,9 @@
   </main>
 
   <footer class="footer">
-    <div class="wrap">
+    <div class="wrap footer__row">
       <p class="credit">Edward Hopper, <em>Corn Hill (Truro, Cape Cod)</em>, 1930.</p>
+      <p class="credit">© 2026 Grady Allen</p>
     </div>
   </footer>
 </body>
