@@ -472,6 +472,24 @@ body::after {
   letter-spacing: 0.02em;
   color: var(--ink-soft);
 }
+.docs { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin: 1rem 0 0; padding: 0; }
+.docs a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.docs a small { font: inherit; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; }
+.docs a:hover, .docs a:focus-visible { background: var(--ink); color: var(--paper); }
 .project__link { display: inline-block; margin-bottom: 1.5rem; font-family: var(--sans); font-size: 0.8125rem; letter-spacing: 0.04em; color: var(--ink); text-underline-offset: 0.3em; }
 
 /* ---- contact ---- */
