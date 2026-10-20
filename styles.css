@@ -146,6 +146,9 @@ a { color: inherit; }
   color: var(--ink-soft);
 }
 
+.hero__status span { display: block; }
+.hero__status span + span { margin-top: 0.2rem; }
+
 .hero__scroll {
   display: inline-flex;
   align-items: center;
@@ -178,7 +181,8 @@ a { color: inherit; }
 
 @media (max-width: 767px) {
   /* Keep the card above the cottages, which sit ~20-32% down on portrait screens. */
-  .hero__card { top: clamp(2.25rem, 5vh, 3.5rem); }
+  .hero__card { top: clamp(1.9rem, 3.5vh, 3rem); }
+  .hero__status { font-size: 0.75rem; letter-spacing: 0.04em; }
   .hero__name { font-size: 2.25rem; }
   .hero__name::after { margin: 0.9rem 0 0.7rem; }
   /* The cue would land on the cottages on portrait screens; touch users know to scroll. */
