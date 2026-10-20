@@ -1,0 +1,295 @@
+/* ==========================================================================
+   Tokens
+   ========================================================================== */
+:root {
+  /* --paper is overwritten at runtime with the colour sampled from foreground.png */
+  --paper: #ebebeb;
+  --sky: #efefef;
+  --ink: #1d1d1b;
+  --ink-soft: #4b4b47;
+  --rule: rgba(29, 29, 27, 0.18);
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+
+  /* Which part of the painting stays in frame when the viewport isn't 3:2.
+     Applied to every layer so they keep lining up. */
+  --pos-x: 50%;
+  --pos-y: 75%;
+}
+
+@media (max-width: 767px) {
+  :root {
+    /* Portrait: the image is cropped left/right. Bias toward the cottages (~60-80% across). */
+    --pos-x: 70%;
+    --pos-y: 100%;
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: var(--paper); -webkit-text-size-adjust: 100%; scroll-behavior: auto; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--sky);
+  isolation: isolate;
+}
+
+.hero__scene {
+  position: absolute;
+  inset: 0;
+}
+
+/* Fade-in after loading. Only active briefly (.is-revealing) so it never fights the scrubbed card opacity. */
+.is-revealing .hero__scene,
+.is-revealing .hero__card { transition: opacity 0.7s ease; }
+
+.layer {
+  position: absolute;
+  inset: 0;
+  /* Only transform is animated. will-change promotes each layer to its own GPU layer. */
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);   /* own compositor layer from frame one */
+  contain: layout paint;
+}
+
+.layer img,
+.hero__fallback img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--pos-x) var(--pos-y);
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* Foreground zooms about its own top edge, so its bottom never lifts off the screen and no extra fill is needed.
+   (An oversized fill + mask here used to exceed GPU texture limits and caused white flashes while scrolling.) */
+
+.hero__fallback { position: absolute; inset: 0; display: none; }
+.hero--fallback .layer { display: none; }
+.hero--fallback .hero__fallback { display: block; }
+
+.hero__veil {
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* While layers decode, show only the quiet sky colour: nothing pops in. */
+.is-loading .hero__scene,
+.is-loading .hero__card { opacity: 0; }
+
+/* ---- business card ---- */
+.hero__card {
+  position: absolute;
+  z-index: 2;
+  left: clamp(1.5rem, 6vw, 6rem);
+  top: clamp(4.5rem, 19vh, 11rem);
+  max-width: min(30rem, calc(100% - 3rem));
+  color: var(--ink);
+  will-change: transform, opacity;
+}
+
+.hero__name {
+  margin: 0;
+  font-weight: 400;
+  font-size: clamp(2.5rem, 5.4vw, 4.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+.hero__name::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 1px;
+  margin: 1.25rem 0 1rem;
+  background: var(--ink);
+  opacity: 0.55;
+}
+
+.hero__status {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-soft);
+}
+
+.hero__scroll-line {
+  position: relative;
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--ink);
+  opacity: 0.5;
+  transform-origin: left center;
+  animation: cue 2.4s ease-in-out infinite;
+}
+
+@keyframes cue {
+  0%   { transform: scaleX(0.15); }
+  55%  { transform: scaleX(1); }
+  100% { transform: scaleX(1); opacity: 0.1; }
+}
+
+@media (max-width: 767px) {
+  /* Keep the card above the cottages, which sit ~20-32% down on portrait screens. */
+  .hero__card { top: clamp(2.25rem, 5vh, 3.5rem); }
+  .hero__name { font-size: 2.25rem; }
+  .hero__name::after { margin: 0.9rem 0 0.7rem; }
+  /* The cue would land on the cottages on portrait screens; touch users know to scroll. */
+  .hero__scroll { display: none; }
+}
+
+/* ==========================================================================
+   Content sections (on the sampled field colour)
+   ========================================================================== */
+.wrap {
+  width: min(70rem, 100% - 3rem);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: clamp(4.5rem, 11vw, 8.5rem);
+}
+.section + .section { border-top: 1px solid var(--rule); }
+#about { padding-top: clamp(3rem, 7vw, 5rem); }
+
+.section .wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
+  column-gap: clamp(2rem, 6vw, 5rem);
+  row-gap: 1.75rem;
+}
+
+.section__label {
+  margin: 0.45rem 0 0;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.section__label span { margin-right: 0.75rem; opacity: 0.6; }
+
+.section__body { max-width: 40rem; }
+.section__body p { margin: 0 0 1.25rem; color: var(--ink-soft); }
+
+.lede {
+  font-size: clamp(1.5rem, 2.8vw, 2.125rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--ink) !important;
+  margin-bottom: 1.75rem !important;
+}
+
+/* Experience */
+.entries { list-style: none; margin: 0; padding: 0; }
+.entry {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 1rem;
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+.entry:first-child { border-top: 0; padding-top: 0.25rem; }
+.entry__when { margin: 0.3rem 0 0 !important; font-family: var(--sans); font-size: 0.8125rem; letter-spacing: 0.05em; }
+.entry__role { margin: 0; font-weight: 400; font-size: 1.375rem; line-height: 1.3; color: var(--ink); }
+.entry__org { margin: 0.1rem 0 0.6rem !important; font-style: italic; }
+.entry__desc { margin: 0 !important; }
+
+/* Contact */
+.big-link {
+  font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+  padding-bottom: 0.15rem;
+}
+.big-link:hover, .big-link:focus-visible { background-size: 100% 2px; }
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+}
+.links a { color: var(--ink-soft); text-underline-offset: 0.3em; }
+.links a:hover { color: var(--ink); }
+
+/* Footer */
+.footer { padding-block: 2.5rem 3rem; border-top: 1px solid var(--rule); }
+.credit {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 767px) {
+  body { font-size: 1.0625rem; }
+  .section .wrap { grid-template-columns: 1fr; }
+  .section__label { margin-top: 0; }
+  .entry { grid-template-columns: 3.75rem 1fr; }
+}
+
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+/* ==========================================================================
+   Reduced motion: no looping cue, no slide-in transitions
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll-line { animation: none; }
+  .is-revealing .hero__scene, .is-revealing .hero__card { transition-duration: 0.01ms; }
+}

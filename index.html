@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" class="is-loading">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Grady Allen</title>
+  <meta name="description" content="Grady Allen — senior at James Madison University, Class of 2027.">
+  <meta name="theme-color" content="#ebebeb">
+
+  <!-- Start fetching the layers immediately; main.js also waits for them to decode before revealing the hero. -->
+  <link rel="preload" as="image" href="assets/hero/sky.png">
+  <link rel="preload" as="image" href="assets/hero/houses.png">
+  <link rel="preload" as="image" href="assets/hero/hill.png">
+  <link rel="preload" as="image" href="assets/hero/foreground.png">
+
+  <link rel="stylesheet" href="styles.css">
+  <!-- Without JS there is nothing to wait for: show the hero straight away. -->
+  <noscript><style>.is-loading .hero__scene, .is-loading .hero__card { opacity: 1 !important; }</style></noscript>
+
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script defer src="main.js"></script>
+</head>
+<body>
+  <main>
+
+    <!-- HERO: pinned while the layers push toward the camera (see main.js CONFIG) -->
+    <section class="hero" id="hero" aria-label="Introduction">
+      <div class="hero__scene" role="img" aria-label="Grayscale painting of white cottages on a dune ridge above a pale field">
+        <!-- Back to front. Order matters. All four share one frame so they align when stacked. -->
+        <div class="layer layer--sky"        data-layer="sky"><img src="assets/hero/sky.png" alt="" draggable="false"></div>
+        <div class="layer layer--houses"     data-layer="houses"><img src="assets/hero/houses.png" alt="" draggable="false"></div>
+        <div class="layer layer--hill"       data-layer="hill"><img src="assets/hero/hill.png" alt="" draggable="false"></div>
+        <div class="layer layer--foreground" data-layer="foreground"><img src="assets/hero/foreground.png" alt="" draggable="false"></div>
+
+        <!-- Shown instead of the layers if any of them fails to load. -->
+        <div class="hero__fallback"><img src="assets/hero/corn-hill-full.jpg" alt="" draggable="false"></div>
+
+        <!-- Flat field colour that fades in at the end so the hand-off to the page is seamless. -->
+        <div class="hero__veil"></div>
+      </div>
+
+      <div class="hero__card">
+        <h1 class="hero__name">Grady Allen</h1>
+        <p class="hero__status">Senior, James Madison University, Class of 2027</p>
+        <a class="hero__scroll" href="#about"><span class="hero__scroll-line" aria-hidden="true"></span>Scroll</a>
+      </div>
+    </section>
+
+    <!-- CONTENT: sits on the sampled foreground colour (--paper). Placeholder copy for now. -->
+    <section class="section" id="about">
+      <div class="wrap">
+        <h2 class="section__label"><span>01</span> About</h2>
+        <div class="section__body">
+          <p class="lede">A short, confident sentence about who you are and what you are looking for goes here.</p>
+          <p>Placeholder paragraph. Replace this with two or three sentences about your background, what you study, and the kind of problems you like working on. Keep it plain and specific; recruiters skim.</p>
+          <p>A second paragraph can cover interests outside of work, or what you are focused on after graduation.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="wrap">
+        <h2 class="section__label"><span>02</span> Experience</h2>
+        <div class="section__body">
+          <ol class="entries">
+            <li class="entry">
+              <p class="entry__when">2026</p>
+              <div>
+                <h3 class="entry__role">Role title</h3>
+                <p class="entry__org">Organization</p>
+                <p class="entry__desc">One or two lines on what you did and the result. Lead with the outcome.</p>
+              </div>
+            </li>
+            <li class="entry">
+              <p class="entry__when">2025</p>
+              <div>
+                <h3 class="entry__role">Role title</h3>
+                <p class="entry__org">Organization</p>
+                <p class="entry__desc">One or two lines on what you did and the result. Lead with the outcome.</p>
+              </div>
+            </li>
+            <li class="entry">
+              <p class="entry__when">2024</p>
+              <div>
+                <h3 class="entry__role">Role title</h3>
+                <p class="entry__org">Organization</p>
+                <p class="entry__desc">One or two lines on what you did and the result. Lead with the outcome.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="wrap">
+        <h2 class="section__label"><span>03</span> Contact</h2>
+        <div class="section__body">
+          <p class="lede">Open to conversations about roles starting after graduation.</p>
+          <p><a class="big-link" href="mailto:you@example.com">you@example.com</a></p>
+          <ul class="links">
+            <li><a href="#">LinkedIn</a></li>
+            <li><a href="#">GitHub</a></li>
+            <li><a href="#">Résumé (PDF)</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p class="credit">Edward Hopper, <em>Corn Hill (Truro, Cape Cod)</em>, 1930.</p>
+    </div>
+  </footer>
+</body>
+</html>
