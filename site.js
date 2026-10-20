@@ -177,9 +177,19 @@
   });
 
   /* ---------- projects: expand + filter ---------- */
-  document.querySelectorAll('.project__head').forEach((btn) => {
+  // One row open at a time: opening a project closes any other, then the page glides so the open row stays in view.
+  const heads = document.querySelectorAll('.project__head');
+  heads.forEach((btn) => {
     btn.addEventListener('click', () => {
-      btn.setAttribute('aria-expanded', btn.getAttribute('aria-expanded') !== 'true');
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      heads.forEach((h) => h.setAttribute('aria-expanded', h === btn && open));
+      if (open) {
+        // Wait for the other panel to finish closing (0.45s), then re-check where this row ended up.
+        setTimeout(() => {
+          const top = btn.getBoundingClientRect().top;
+          if (top < NAV_OFFSET + 8 || top > window.innerHeight * 0.55) glideTo(Math.max(0, scrollY + top - NAV_OFFSET - 24));
+        }, 480);
+      }
     });
   });
 

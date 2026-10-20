@@ -176,7 +176,7 @@
       b.className = 'reader__tab';
       b.setAttribute('role', 'tab');
       b.setAttribute('aria-selected', i === groupIdx);
-      const label = a.childNodes[0].textContent.trim();
+      const label = a.querySelector('.docs__label').childNodes[0].textContent.trim();
       const small = a.querySelector('small');
       b.innerHTML = `<span></span><small></small>`;
       b.firstChild.textContent = label;
