@@ -335,8 +335,9 @@ body::after {
 .timeline::before { background: var(--rule); }
 .timeline__bar {
   background: var(--ink);
-  transform: scaleY(var(--p, 0));    /* driven by scroll in site.js */
+  transform: scaleY(var(--p, 0));    /* driven by scroll + hover in site.js */
   transform-origin: top;
+  transition: transform 0.2s ease-out;
 }
 
 .job {
@@ -358,10 +359,10 @@ body::after {
   border-radius: 50%;
   background: var(--paper);
   border: 1px solid var(--ink);
-  transition: background 0.4s ease 0.2s;
+  transition: background 0.25s ease;
 }
 .job:first-child::before { top: 0.65rem; }
-.job.is-in::before { background: var(--ink); }
+.job.is-reached::before { background: var(--ink); }
 
 .job__org h3 { margin: 0; font-weight: 400; font-size: 1.1875rem; line-height: 1.3; color: var(--ink); }
 .job__org p { margin: 0.25rem 0 0; font-family: var(--sans); font-size: 0.75rem; line-height: 1.45; color: var(--ink-soft); }

@@ -80,7 +80,26 @@
   const sections = navLinks.map((a) => document.querySelector(a.getAttribute('href')));
 
   /* ---------- timeline ---------- */
+  // The line follows whichever is further down: how far you've scrolled, or the job under the mouse.
+  // Dots fill in once the line has reached them, so the line and the filled dots never disagree.
   const timeline = document.querySelector('[data-timeline]');
+  const jobs = timeline ? [...timeline.querySelectorAll('.job')] : [];
+  let dotY = [], barTop = 8, barH = 1, hovered = -1;
+  const measure = () => {
+    if (!timeline) return;
+    barTop = parseFloat(getComputedStyle(timeline.querySelector('.timeline__bar')).top) || 8;
+    barH = Math.max(1, timeline.offsetHeight - barTop * 2);
+    dotY = jobs.map((j) => j.offsetTop + (parseFloat(getComputedStyle(j, '::before').top) || 0) + 3.5);
+  };
+  if (timeline) {
+    measure();
+    addEventListener('load', () => { measure(); onScroll(); });
+    addEventListener('resize', measure);
+    jobs.forEach((j, i) => {
+      j.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { measure(); hovered = i; onScroll(); } });
+      j.addEventListener('pointerleave', () => { hovered = -1; onScroll(); });
+    });
+  }
 
   /* ---------- one scroll loop ---------- */
   let ticking = false;
@@ -104,10 +123,15 @@
       spans.forEach((s, i) => { s.style.opacity = (0.2 + 0.8 * clamp(t - i)).toFixed(2); });
     });
 
-    // Timeline line draws as the list scrolls through the viewport.
+    // Timeline: line length = max(scroll progress, hovered job's dot).
     if (timeline && !reduceMotion) {
       const r = timeline.getBoundingClientRect();
-      timeline.style.setProperty('--p', clamp((vh * 0.65 - r.top) / r.height).toFixed(3));
+      let p = clamp((vh * 0.65 - r.top - barTop) / barH);
+      if (hovered >= 0) p = Math.max(p, clamp((dotY[hovered] - barTop) / barH));
+      timeline.style.setProperty('--p', p.toFixed(3));
+      jobs.forEach((j, i) => j.classList.toggle('is-reached', (dotY[i] - barTop) / barH <= p + 0.002));
+    } else if (timeline) {
+      jobs.forEach((j) => j.classList.add('is-reached'));
     }
   };
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
