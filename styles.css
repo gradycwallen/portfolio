@@ -349,7 +349,8 @@ body::after {
   border-top: 1px solid var(--rule);
   transition: opacity 0.35s ease;
 }
-.job:first-child { border-top: 0; padding-top: 0.25rem; }
+.job.is-first { border-top: 0; padding-top: 0.25rem; }
+.job[hidden] { display: none; }
 .job::before {          /* dot on the timeline */
   content: "";
   position: absolute;
@@ -361,7 +362,7 @@ body::after {
   border: 1px solid var(--ink);
   transition: background 0.25s ease;
 }
-.job:first-child::before { top: 0.65rem; }
+.job.is-first::before { top: 0.65rem; }
 .job.is-reached::before { background: var(--ink); }
 
 .job__org h3 { margin: 0; font-weight: 400; font-size: 1.1875rem; line-height: 1.3; color: var(--ink); }

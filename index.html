@@ -107,10 +107,17 @@
       <div class="wrap">
         <h2 class="section__label"><span>02</span> Experience</h2>
         <div class="section__body section__body--wide">
+          <div class="filters reveal" role="group" aria-label="Filter experience">
+            <button class="chip is-active" data-filter="all" aria-pressed="true">All</button>
+            <button class="chip" data-filter="consulting" aria-pressed="false">Consulting</button>
+            <button class="chip" data-filter="growth" aria-pressed="false">Growth &amp; Strategy</button>
+            <button class="chip" data-filter="venture" aria-pressed="false">Venture Capital</button>
+            <button class="chip" data-filter="jmu" aria-pressed="false">JMU</button>
+          </div>
           <div class="timeline" data-timeline>
             <span class="timeline__bar" aria-hidden="true"></span>
 
-            <article class="job reveal">
+            <article class="job reveal is-first" data-cat="growth">
               <header class="job__org">
                 <h3>Polymarket</h3>
                 <p>Remote · New York</p>
@@ -123,10 +130,10 @@
               </div>
             </article>
 
-            <article class="job reveal">
+            <article class="job reveal" data-cat="venture jmu">
               <header class="job__org">
-                <h3>JMU Gilliam Center for Entrepreneurship</h3>
-                <p>Bluestone Seed Fund · Harrisonburg, Virginia</p>
+                <h3>Bluestone Seed Fund</h3>
+                <p>Harrisonburg, Virginia</p>
               </header>
               <div class="job__roles">
                 <div class="role">
@@ -140,7 +147,7 @@
               </div>
             </article>
 
-            <article class="job reveal">
+            <article class="job reveal" data-cat="consulting jmu">
               <header class="job__org">
                 <h3>Madison Consulting Club</h3>
                 <p>Student-run consulting firm · Harrisonburg, Virginia</p>
@@ -161,7 +168,7 @@
               </div>
             </article>
 
-            <article class="job reveal">
+            <article class="job reveal" data-cat="jmu">
               <header class="job__org">
                 <h3>JMU College of Business</h3>
                 <p>Harrisonburg, Virginia</p>
@@ -174,7 +181,7 @@
               </div>
             </article>
 
-            <article class="job reveal">
+            <article class="job reveal" data-cat="consulting">
               <header class="job__org">
                 <h3>KPMG</h3>
                 <p>Consulting · McLean, Virginia</p>
@@ -187,7 +194,7 @@
               </div>
             </article>
 
-            <article class="job reveal">
+            <article class="job reveal" data-cat="jmu">
               <header class="job__org">
                 <h3>American Marketing Association, JMU</h3>
                 <p>Harrisonburg, Virginia</p>
@@ -200,7 +207,7 @@
               </div>
             </article>
 
-            <article class="job reveal">
+            <article class="job reveal" data-cat="growth">
               <header class="job__org">
                 <h3>World</h3>
                 <p>Remote · San Francisco</p>
@@ -213,7 +220,7 @@
               </div>
             </article>
 
-            <article class="job reveal">
+            <article class="job reveal" data-cat="growth">
               <header class="job__org">
                 <h3>Reston Tech Wiz</h3>
                 <p>Reston, Virginia</p>
@@ -222,19 +229,6 @@
                 <div class="role">
                   <div class="role__top"><h4>Go-To-Market Strategy Intern</h4><span class="role__dates">May – Sep 2025</span></div>
                   <p>Owned go-to-market and customer-acquisition strategy for an all-in-one marketing, website, client communication and project-management SaaS aimed at the fragmented HVAC and home-services market.</p>
-                </div>
-              </div>
-            </article>
-
-            <article class="job reveal">
-              <header class="job__org">
-                <h3>charity: water</h3>
-                <p>Global Career Accelerator externship</p>
-              </header>
-              <div class="job__roles">
-                <div class="role">
-                  <div class="role__top"><h4>Digital Marketing Intern</h4><span class="role__dates">May – Aug 2024</span></div>
-                  <p>Ran digital marketing campaigns, A/B tested creative and built landing pages.</p>
                 </div>
               </div>
             </article>

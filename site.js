@@ -89,7 +89,7 @@
     if (!timeline) return;
     barTop = parseFloat(getComputedStyle(timeline.querySelector('.timeline__bar')).top) || 8;
     barH = Math.max(1, timeline.offsetHeight - barTop * 2);
-    dotY = jobs.map((j) => j.offsetTop + (parseFloat(getComputedStyle(j, '::before').top) || 0) + 3.5);
+    dotY = jobs.map((j) => (j.hidden ? -1 : j.offsetTop + (parseFloat(getComputedStyle(j, '::before').top) || 0) + 3.5));
   };
   if (timeline) {
     measure();
@@ -129,7 +129,7 @@
       let p = clamp((vh * 0.65 - r.top - barTop) / barH);
       if (hovered >= 0) p = Math.max(p, clamp((dotY[hovered] - barTop) / barH));
       timeline.style.setProperty('--p', p.toFixed(3));
-      jobs.forEach((j, i) => j.classList.toggle('is-reached', (dotY[i] - barTop) / barH <= p + 0.002));
+      jobs.forEach((j, i) => j.classList.toggle('is-reached', !j.hidden && (dotY[i] - barTop) / barH <= p + 0.002));
     } else if (timeline) {
       jobs.forEach((j) => j.classList.add('is-reached'));
     }
@@ -183,20 +183,32 @@
     });
   });
 
-  const chips = document.querySelectorAll('.chip');
-  const projects = document.querySelectorAll('.project');
-  chips.forEach((chip) => {
-    chip.addEventListener('click', () => {
-      const f = chip.dataset.filter;
-      chips.forEach((c) => {
-        const on = c === chip;
-        c.classList.toggle('is-active', on);
-        c.setAttribute('aria-pressed', on);
-      });
-      projects.forEach((p) => {
-        const show = f === 'all' || p.dataset.cat === f;
-        p.hidden = !show;
-        if (show) p.classList.add('is-in'); // filtered-in rows must never stay faded out
+  // Filter chips (Experience and Projects share this). Items carry data-cat="a b"; a chip shows items whose
+  // categories include its filter. Hidden items are skipped by the timeline, and the first visible job is re-flagged.
+  document.querySelectorAll('.filters').forEach((group) => {
+    const section = group.closest('.section');
+    const items = section.querySelectorAll('[data-cat]');
+    const chips = group.querySelectorAll('.chip');
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const f = chip.dataset.filter;
+        chips.forEach((c) => {
+          const on = c === chip;
+          c.classList.toggle('is-active', on);
+          c.setAttribute('aria-pressed', on);
+        });
+        items.forEach((el) => {
+          const show = f === 'all' || el.dataset.cat.split(' ').includes(f);
+          el.hidden = !show;
+          if (show) el.classList.add('is-in'); // filtered-in rows must never stay faded out
+        });
+        if (timeline && section.contains(timeline)) {
+          jobs.forEach((j) => j.classList.remove('is-first'));
+          const first = jobs.find((j) => !j.hidden);
+          if (first) first.classList.add('is-first');
+          measure();
+        }
+        onScroll();
       });
     });
   });
