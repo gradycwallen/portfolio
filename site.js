@@ -139,6 +139,43 @@
   addEventListener('resize', onScroll);
   update();
 
+  /* ---------- eased anchor scrolling ---------- */
+  // Nav / in-page links glide with an ease-in-out (slow start, fast middle, slow landing)
+  // instead of jumping. Duration grows with distance. Any wheel/touch/key press cancels it.
+  const EASE = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2); // easeInOutCubic
+  const NAV_OFFSET = 56;           // land just under the slim nav
+  let glide = 0;                   // id of the running animation frame
+  const stopGlide = () => { cancelAnimationFrame(glide); glide = 0; };
+
+  const glideTo = (y) => {
+    stopGlide();
+    const from = scrollY, dist = y - from;
+    if (reduceMotion || Math.abs(dist) < 4) { scrollTo(0, y); return; }
+    const dur = clamp(Math.abs(dist) * 0.45, 700, 1800);   // ms: tune the 0.45 / min / max to taste
+    const t0 = performance.now();
+    const step = (now) => {
+      const p = clamp((now - t0) / dur);
+      scrollTo(0, from + dist * EASE(p));
+      glide = p < 1 ? requestAnimationFrame(step) : 0;
+    };
+    glide = requestAnimationFrame(step);
+  };
+  ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach((ev) =>
+    addEventListener(ev, () => { if (glide) stopGlide(); }, { passive: true }));
+
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href').slice(1);
+      const target = id === 'hero' ? null : document.getElementById(id);
+      if (id !== 'hero' && !target) return;
+      e.preventDefault();
+      // Live position, so it stays correct while the hero is pinned.
+      const y = target ? target.getBoundingClientRect().top + scrollY - NAV_OFFSET : 0;
+      glideTo(Math.max(0, y));
+      history.replaceState(null, '', id === 'hero' ? location.pathname : '#' + id);
+    });
+  });
+
   /* ---------- projects: expand + filter ---------- */
   document.querySelectorAll('.project__head').forEach((btn) => {
     btn.addEventListener('click', () => {
